@@ -8,7 +8,7 @@ from programs.function_files.Relative_density_plot_functions import *
 Date = '15_12_2020'
 Experiment_type = '200_1'
 Voltage = '-200'
-Pressure = '1.9'
+Pressure = '0.19'
 laser_position = 'cax'
 if laser_position == 'cax':
     title_position = 'Centre Axis'
@@ -18,6 +18,23 @@ elif laser_position == 'rad':
     title_position = 'Radial'
 title_position += ', Self Sust.' if Date == '18_12_2020' else ''
 combined = 'y'
+
+if Date == '15_12_2020':
+    Exp_no = 1
+    cathode_lip = 161
+    spacing_val = 0.4
+elif Date == '16_12_2020':
+    Exp_no = 2
+    cathode_lip = 161
+    spacing_val = 0.4
+elif Date == '18_12_2020':
+    Exp_no = 3
+    cathode_lip = 159
+    spacing_val = 0.1
+elif Date == '17_12_2020':
+    Exp_no = 4
+    cathode_lip = 159
+    spacing_val = 0.4
 
 linestyles = ['solid']*20
 
@@ -46,7 +63,7 @@ print(path)
 experiments_dic = load_experiment_files_as_dic(path, experiments)
 dic_keys = list(experiments_dic.keys())
 nerds, positions = get_densities_normalised_to_bulk_density(experiments_dic)
-dist_positions = np.abs(np.asarray(positions)-161)
+dist_positions = np.abs(np.asarray(positions)-cathode_lip)
 
 x_axis_list, y_axis_list = [],[]
 for key in dic_keys:
@@ -62,7 +79,7 @@ spacing_start = 0
 for value in color_values:
     colours.append(color_map(value))
     spacing.append(spacing_start)
-    spacing_start+=0.4
+    spacing_start+=spacing_val
 
 ylimlist = []
 
@@ -82,7 +99,7 @@ ax.set_xlabel('Ion Velocity (km/s)', fontsize = axis_fs)
 ax.set_ylabel('Signal Intensity (arb.)', fontsize = axis_fs)
 ax.set_xlim(-17.5, 25)
 ax.set_ylim(0, max(ylimlist)+0.1)
-ax.set_title('{} mTorr, {} V, {}'.format(Pressure, Voltage, title_position), fontsize = title_fs)
+ax.set_title('Exp. {}, {} mTorr, {} V, {}'.format(Exp_no, Pressure, Voltage, title_position), fontsize = title_fs)
 ax.axvline(x=0, color = 'black', linestyle = 'dotted', alpha = 0.5)
 handles, labels = ax.get_legend_handles_labels()
 ax.legend(handles[::-1], labels[::-1], loc = 'lower right', fontsize = 'medium', framealpha = 0.75, handlelength=2, borderpad = 0.2, title = 'Axial Dist. (mm)', title_fontsize = 'medium', labelspacing = 0.2)

@@ -5,6 +5,7 @@ from itertools import cycle
 import os
 import timeit
 import sys
+import scipy.constants as const
 
 def find_nearest_index_in_array(array, value):
     array = np.asarray(array)

@@ -30,7 +30,7 @@ for date in analysis_dates:
             experiments_dic = load_experiment_files_as_dic(os.path.join(path, option), experiments)
             Exp_dic_list.append(experiments_dic)
             relative_densities, positions = get_densities_normalised_to_bulk_density(experiments_dic)
-            dist_positions = np.abs(np.asarray(positions) - 161)
+            dist_positions = np.abs(np.asarray(positions) - 159)
             x_axis_list.append(dist_positions)
             relative_densities_list.append(np.asarray(relative_densities))
     else:
@@ -38,7 +38,7 @@ for date in analysis_dates:
         experiments_dic = load_experiment_files_as_dic(path, experiments)
         Exp_dic_list.append(experiments_dic)
         relative_densities, positions = get_densities_normalised_to_bulk_density(experiments_dic)
-        dist_positions = np.abs(np.asarray(positions)-161)
+        dist_positions = np.abs(np.asarray(positions)-159) if date == '18_12_2020' else np.abs(np.asarray(positions)-161)
         x_axis_list.append(dist_positions)
         relative_densities_list.append(np.asarray(relative_densities))
 
@@ -56,21 +56,21 @@ a = 0.75
 fig, ax = plt.subplots(figsize = (6,6))
 
 print(Exp_name_list[5])
-ax.plot(x_axis_list[5], relative_densities_list[5], color = 'grey', marker = 'D', linestyle = (0, (5, 1)), linewidth = lw, markersize = mkrsz, alpha = a, label = '$V=-1000,$ $p=37$,    cax')
+ax.plot(x_axis_list[5], relative_densities_list[5], color = 'grey', marker = 'D', linestyle = (0, (5, 1)), linewidth = lw, markersize = mkrsz, alpha = a, label = '$3, V=-1000,$ $p=37$,    cax')
 print(Exp_name_list[0])
-ax.plot(x_axis_list[0], relative_densities_list[0], color = 'b', marker = 'o', linestyle = 'dashed', linewidth = lw, markersize = mkrsz, alpha = a, label = '$V=-200,$   $p=0.19$, cax')
+ax.plot(x_axis_list[0], relative_densities_list[0], color = 'b', marker = 'o', linestyle = 'dashed', linewidth = lw, markersize = mkrsz, alpha = a, label = '1, $V=-200,$   $p=0.19$, cax')
 
 
 print(x_axis_list[4])
 print(Exp_name_list[1])
-ax.plot(x_axis_list[1], relative_densities_list[1], color = 'r', marker = 's', linestyle = (0, (5,10)), linewidth = lw, markersize = mkrsz, alpha = a, label = '$V=-200,$   $p=1.9$,   cax')
+ax.plot(x_axis_list[1], relative_densities_list[1], color = 'r', marker = 's', linestyle = (0, (5,10)), linewidth = lw, markersize = mkrsz, alpha = a, label = '2, $V=-200,$   $p=1.9$,   cax')
 
 print(Exp_name_list[2])
-ax.plot(x_axis_list[2], relative_densities_list[2], color = 'k', marker = 'x', linestyle = 'solid', linewidth = lw, markersize = mkrsz+2, alpha = a, label = '$V=-200,$   $p=0.19$, cax')
+ax.plot(x_axis_list[2], relative_densities_list[2], color = 'k', marker = 'x', linestyle = 'solid', linewidth = lw, markersize = mkrsz+2, alpha = a, label = '$4, V=-200,$   $p=0.19$, cax')
 print(Exp_name_list[3])
-ax.plot(x_axis_list[3], relative_densities_list[3], color = 'k', marker = '+', linestyle = 'dotted', linewidth = lw, markersize = mkrsz+3, alpha = a, label = '$V=-200,$   $p=0.19$, bax')
+ax.plot(x_axis_list[3], relative_densities_list[3], color = 'k', marker = '+', linestyle = 'dotted', linewidth = lw, markersize = mkrsz+3, alpha = a, label = '4, $V=-200,$   $p=0.19$, bax')
 print(Exp_name_list[4])
-ax.plot(x_axis_list[4], relative_densities_list[4], color = 'k', marker = '1', linestyle = 'dashdot', linewidth = lw, markersize = mkrsz+4,alpha = a, label = '$V=-200,$   $p=0.19$, rad')
+ax.plot(x_axis_list[4], relative_densities_list[4], color = 'k', marker = '1', linestyle = 'dashdot', linewidth = lw, markersize = mkrsz+4,alpha = a, label = '4, $V=-200,$   $p=0.19$, rad')
 
 
 
@@ -80,17 +80,15 @@ ax.set_ylabel('Relative Density', fontsize = label_fs)
 # ax.set_yticklabels(fontsize = ticksize)
 ax.set_title('Hollow Cathode ArII 3d $^2\mathregular{G}_{9/2}$ Density', fontsize = t_fs)
 
-ax.legend(loc = 'upper left', fontsize = 'medium', numpoints = 2, markerfirst = True, framealpha = 0.75, handlelength=4, borderpad = 0.2, title = 'V, mTorr, pos', markerscale = 0.75, title_fontsize = 'medium')
+ax.legend(loc = 'upper left', fontsize = 'medium', numpoints = 2, markerfirst = True, framealpha = 0.75, handlelength=4, borderpad = 0.2, title = 'Exp, V, mTorr, pos', markerscale = 0.75, title_fontsize = 'medium')
 
 fig.tight_layout()
 
-figure_path = os.path.join(os.path.dirname(os.getcwd()), 'figures', 'paper_figures')
-plt.savefig(os.path.join(figure_path, 'Relative_density_plot.eps'), format = 'eps')
-plt.savefig(os.path.join(figure_path, 'Relative_density_plot.png'), format = 'png')
-
+figurepath = os.path.join(os.path.dirname(os.getcwd()), 'figures', 'paper_figures')
+plt.savefig(os.path.join(figurepath, 'Relative_density_plot.eps'), format = 'eps')
+plt.savefig(os.path.join(figurepath, 'Relative_density_plot.png'), format = 'png')
 plt.show()
 plt.close()
-
 
 ###############################################################################################################
 # CREATING THE MEAN VELOCITY DIC
@@ -151,61 +149,73 @@ for dic in Exp_dic_list:
     y_mean_lists.append(np.asarray(mean_vels))
     y_peak_lists.append(np.asarray(peak_vels))
 
-fig2, ax2 = plt.subplots(ncols = 2, figsize = (8,4))
+fig2, ax2 = plt.subplots(ncols = 1, figsize = (6,6))
 
 print(Exp_name_list[5])
-ax2[0].plot(dist_positions_lists[5], y_mean_lists[5]*1e-3, color = 'grey', marker = 'D', linestyle = (0, (5, 1)), linewidth = lw, markersize = mkrsz, alpha = a, label = '$V=-1000,$ $p=37$,    cax')
+ax2.plot(dist_positions_lists[5], y_mean_lists[5]*1e-3, color = 'grey', marker = 'D', linestyle = (0, (5, 1)), linewidth = lw, markersize = mkrsz, alpha = a, label = '$3, V=-1000,$ $p=37$,    cax')
 print(Exp_name_list[0])
-ax2[0].plot(dist_positions_lists[0], y_mean_lists[0]*1e-3, color = 'b', marker = 'o', linestyle = 'dashed', linewidth = lw, markersize = mkrsz, alpha = a, label = '$V=-200,$   $p=0.19$, cax')
+ax2.plot(dist_positions_lists[0], y_mean_lists[0]*1e-3, color = 'b', marker = 'o', linestyle = 'dashed', linewidth = lw, markersize = mkrsz, alpha = a, label = '$1, V=-200,$   $p=0.19$, cax')
 print(Exp_name_list[1])
-ax2[0].plot(dist_positions_lists[1][:-2], y_mean_lists[1][:-2]*1e-3, color = 'r', marker = 's', linestyle = (0, (5,10)), linewidth = lw, markersize = mkrsz, alpha = a, label = '$V=-200,$   $p=1.9$,   cax')
+ax2.plot(dist_positions_lists[1][:-2], y_mean_lists[1][:-2]*1e-3, color = 'r', marker = 's', linestyle = (0, (5,10)), linewidth = lw, markersize = mkrsz, alpha = a, label = '$2, V=-200,$   $p=1.9$,   cax')
 
 print(Exp_name_list[2])
-ax2[0].plot(dist_positions_lists[2], y_mean_lists[2]*1e-3, color = 'k', marker = 'x', linestyle = 'solid', linewidth = lw, markersize = mkrsz+2, alpha = a, label = '$V=-200,$   $p=0.19$, cax')
+ax2.plot(dist_positions_lists[2], y_mean_lists[2]*1e-3, color = 'k', marker = 'x', linestyle = 'solid', linewidth = lw, markersize = mkrsz+2, alpha = a, label = '$4, V=-200,$   $p=0.19$, cax')
 # print(Exp_name_list[3])
 # ax2[0].plot(dist_positions_lists[3], y_mean_lists[3]*1e-3, color = 'k', marker = '+', linestyle = 'dotted', linewidth = lw, markersize = mkrsz+3, alpha = a, label = '$V=-200,$   $p=0.19$, bax')
 print(Exp_name_list[4])
-ax2[0].plot(dist_positions_lists[4], y_mean_lists[4]*1e-3, color = 'k', marker = '1', linestyle = 'dashdot', linewidth = lw, markersize = mkrsz+4,alpha = a, label = '$V=-200,$   $p=0.19$, rad')
+ax2.plot(dist_positions_lists[4], y_mean_lists[4]*1e-3, color = 'k', marker = '1', linestyle = 'dashdot', linewidth = lw, markersize = mkrsz+4,alpha = a, label = '$4, V=-200,$   $p=0.19$, rad')
 
 
 
-ax2[0].set_xlabel('Axial dist. from cathode edge (mm)', fontsize = label_fs)
-ax2[0].set_xlim((65, 0))
-ax2[0].set_ylabel('Mean velocity (km/s)', fontsize = label_fs)
+ax2.set_xlabel('Axial dist. from cathode edge (mm)', fontsize = label_fs)
+ax2.set_xlim((65, 0))
+ax2.set_ylabel('Mean velocity (km/s)', fontsize = label_fs)
 # ax.set_yticklabels(fontsize = ticksize)
-ax2[0].set_title('Hollow Cathode ArII 3d $^2\mathregular{G}_{9/2}$ $<\mathbf{v}>$', fontsize = t_fs)
+ax2.set_title('Hollow Cathode ArII 3d $^2\mathregular{G}_{9/2}$ $<\mathbf{v}>$', fontsize = t_fs)
 
-ax2[0].legend(loc = 'upper left', fontsize = 'medium', numpoints = 2, markerfirst = True, framealpha = 0.75, handlelength=4, borderpad = 0.2, title = 'V, mTorr, pos', markerscale = 0.75, title_fontsize = 'medium')
+ax2.legend(loc = 'upper left', fontsize = 'medium', numpoints = 2, markerfirst = True, framealpha = 0.75, handlelength=4, borderpad = 0.2, title = 'Exp, V, mTorr, pos', markerscale = 0.75, title_fontsize = 'medium')
+fig2.tight_layout()
+
+figurepath = os.path.join(os.path.dirname(os.getcwd()), 'figures', 'paper_figures')
+plt.savefig(os.path.join(figurepath, 'Mean_velocity_plot.eps'), format = 'eps')
+plt.savefig(os.path.join(figurepath, 'Mean_velocity_plot.png'), format = 'png')
+plt.show()
+plt.close()
+
+
+fig3, ax3 = plt.subplots(figsize = (6,6))
 
 print(Exp_name_list[5])
-ax2[1].plot(dist_positions_lists[5], y_peak_lists[5]*1e-3, color = 'grey', marker = 'D', linestyle = (0, (5, 1)), linewidth = lw, markersize = mkrsz, alpha = a, label = '$V=-1000,$ $p=37$,    cax')
+ax3.plot(dist_positions_lists[5], y_peak_lists[5]*1e-3, color = 'grey', marker = 'D', linestyle = (0, (5, 1)), linewidth = lw, markersize = mkrsz, alpha = a, label = '$3, V=-1000,$ $p=37$,    cax')
 print(Exp_name_list[0])
-ax2[1].plot(dist_positions_lists[0], y_peak_lists[0]*1e-3, color = 'b', marker = 'o', linestyle = 'dashed', linewidth = lw, markersize = mkrsz, alpha = a, label = '$V=-200,$   $p=0.19$, cax')
+ax3.plot(dist_positions_lists[0], y_peak_lists[0]*1e-3, color = 'b', marker = 'o', linestyle = 'dashed', linewidth = lw, markersize = mkrsz, alpha = a, label = '$1, V=-200,$   $p=0.19$, cax')
 print(Exp_name_list[1])
-ax2[1].plot(dist_positions_lists[1][:-2], y_peak_lists[1][:-2]*1e-3, color = 'r', marker = 's', linestyle = (0, (5,10)), linewidth = lw, markersize = mkrsz, alpha = a, label = '$V=-200,$   $p=1.9$,   cax')
+ax3.plot(dist_positions_lists[1][:-2], y_peak_lists[1][:-2]*1e-3, color = 'r', marker = 's', linestyle = (0, (5,10)), linewidth = lw, markersize = mkrsz, alpha = a, label = '$2, V=-200,$   $p=1.9$,   cax')
 
 print(Exp_name_list[2])
-ax2[1].plot(dist_positions_lists[2], y_peak_lists[2]*1e-3, color = 'k', marker = 'x', linestyle = 'solid', linewidth = lw, markersize = mkrsz+2, alpha = a, label = '$V=-200,$   $p=0.19$, cax')
+ax3.plot(dist_positions_lists[2], y_peak_lists[2]*1e-3, color = 'k', marker = 'x', linestyle = 'solid', linewidth = lw, markersize = mkrsz+2, alpha = a, label = '$4, V=-200,$   $p=0.19$, cax')
 # print(Exp_name_list[3])
 # ax2[1].plot(dist_positions_lists[3], y_peak_lists[3], color = 'k', marker = '+', linestyle = 'dotted', linewidth = lw, markersize = mkrsz+3, alpha = a, label = '$V=-200,$   $p=0.19$, bax')
 print(Exp_name_list[4])
-ax2[1].plot(dist_positions_lists[4], y_peak_lists[4]*1e-3, color = 'k', marker = '1', linestyle = 'dashdot', linewidth = lw, markersize = mkrsz+4,alpha = a, label = '$V=-200,$   $p=0.19$, rad')
+ax3.plot(dist_positions_lists[4], y_peak_lists[4]*1e-3, color = 'k', marker = '1', linestyle = 'dashdot', linewidth = lw, markersize = mkrsz+4,alpha = a, label = '$4, V=-200,$   $p=0.19$, rad')
 
 
 
-ax2[1].set_xlabel('Axial dist. from cathode edge (mm)', fontsize = label_fs)
-ax2[1].set_xlim((65, 0))
-ax2[1].set_ylabel('Peak Velocity (m/s)', fontsize = label_fs)
+ax3.set_xlabel('Axial dist. from cathode edge (mm)', fontsize = label_fs)
+ax3.set_xlim((65, 0))
+ax3.set_ylabel('Peak Velocity (m/s)', fontsize = label_fs)
 # ax.set_yticklabels(fontsize = ticksize)
-ax2[1].set_title('Hollow Cathode ArII 3d $^2\mathregular{G}_{9/2}$ $\mathbf{v}_\mathregular{pk}$', fontsize = t_fs)
+ax3.set_title('Hollow Cathode ArII 3d $^2\mathregular{G}_{9/2}$ $\mathbf{v}_\mathregular{pk}$', fontsize = t_fs)
 
-ax2[1].legend(loc = 'upper left', fontsize = 'medium', numpoints = 2, markerfirst = True, framealpha = 0.75, handlelength=4, borderpad = 0.2, title = 'V, mTorr, pos', markerscale = 0.75, title_fontsize = 'medium')
+ax3.legend(loc = 'upper left', fontsize = 'medium', numpoints = 2, markerfirst = True, framealpha = 0.75, handlelength=4, borderpad = 0.2, title = 'Exp, V, mTorr, pos', markerscale = 0.75, title_fontsize = 'medium')
 
-fig2.tight_layout()
 
-figure_path = os.path.join(os.path.dirname(os.getcwd()), 'figures', 'paper_figures')
-plt.savefig(os.path.join(figure_path, 'Velocity_plot.eps'), format = 'eps')
-plt.savefig(os.path.join(figure_path, 'Velocity_plot.png'), format = 'png')
+fig3.tight_layout()
+
+figurepath = os.path.join(os.path.dirname(os.getcwd()), 'figures', 'paper_figures')
+plt.savefig(os.path.join(figurepath, 'Peak_velocity_plot.eps'), format = 'eps')
+plt.savefig(os.path.join(figurepath, 'Peak_velocity_plot.png'), format = 'png')
 
 plt.show()
 plt.close()
+
