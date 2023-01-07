@@ -170,6 +170,7 @@ ax2.plot(dist_positions_lists[4], y_mean_lists[4]*1e-3, color = 'k', marker = '1
 ax2.set_xlabel('Axial dist. from cathode edge (mm)', fontsize = label_fs)
 ax2.set_xlim((65, 0))
 ax2.set_ylabel('Mean velocity (km/s)', fontsize = label_fs)
+ax2.axhline(y=1.742, linestyle = '--', color = 'black', alpha = 1)
 # ax.set_yticklabels(fontsize = ticksize)
 ax2.set_title('Hollow Cathode ArII 3d $^2\mathregular{G}_{9/2}$ $<\mathbf{v}>$', fontsize = t_fs)
 
