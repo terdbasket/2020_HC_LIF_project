@@ -5,10 +5,10 @@ from programs.function_files.Relative_density_plot_functions import *
 
 #Load all function files, perhaps as dictionary
 #Data_files to use
-Date = '15_12_2020'
-Experiment_type = '200_1'
-Voltage = '-200'
-Pressure = '0.19'
+Date = '18_12_2020'
+Experiment_type = '1000_1'
+Voltage = '-1000'
+Pressure = '37'
 laser_position = 'cax'
 if laser_position == 'cax':
     title_position = 'Centre Axis'
@@ -72,6 +72,8 @@ for key in dic_keys:
     x_axis_list.append(np.asarray(df[column_headers[1]]))
     y_axis_list.append(np.asarray(df[column_headers[0]]))
 
+plasma_velocity = x_axis_list[0][find_nearest_index_in_array(y_axis_list[0], max(y_axis_list[0]))]
+
 color_values = np.linspace(0,0.75,len(dic_keys))
 color_map = matplotlib.cm.get_cmap('CMRmap')
 colours, spacing = [], []
@@ -100,7 +102,7 @@ ax.set_ylabel('Signal Intensity (arb.)', fontsize = axis_fs)
 ax.set_xlim(-17.5, 25)
 ax.set_ylim(0, max(ylimlist)+0.1)
 ax.set_title('Exp. {}, {} mTorr, {} V, {}'.format(Exp_no, Pressure, Voltage, title_position), fontsize = title_fs)
-ax.axvline(x=0, color = 'black', linestyle = 'dotted', alpha = 0.5)
+ax.axvline(x=plasma_velocity*1e-3, color = 'black', linestyle = 'dotted', alpha = 0.5)
 handles, labels = ax.get_legend_handles_labels()
 ax.legend(handles[::-1], labels[::-1], loc = 'lower right', fontsize = 'medium', framealpha = 0.75, handlelength=2, borderpad = 0.2, title = 'Axial Dist. (mm)', title_fontsize = 'medium', labelspacing = 0.2)
 
