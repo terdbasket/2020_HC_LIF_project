@@ -3,6 +3,8 @@ from programs.function_files.Relative_density_plot_functions import *
 #Load all function files, perhaps as dictionary
 #Data_files to use
 
+m_Ar = 6.636e-26
+
 analysis_path = os.path.join(os.path.dirname(os.getcwd()), 'analysis_files')
 analysis_dates = list(os.listdir(analysis_path))
 
@@ -49,7 +51,7 @@ mkrsz = 5
 lw = 1
 label_fs = 14
 t_fs = label_fs+1
-ticksize = 12
+ticksize = 14
 a = 0.75
 
 
@@ -79,8 +81,8 @@ ax.set_xlim((65, 0))
 ax.set_ylabel('Relative Density', fontsize = label_fs)
 # ax.set_yticklabels(fontsize = ticksize)
 ax.set_title('Hollow Cathode ArII 3d $^2\mathregular{G}_{9/2}$ Density', fontsize = t_fs)
-
-ax.legend(loc = 'upper left', fontsize = 'medium', numpoints = 2, markerfirst = True, framealpha = 0.75, handlelength=4, borderpad = 0.2, title = 'Exp, V, mTorr, pos', markerscale = 0.75, title_fontsize = 'medium')
+ax.tick_params(axis='both', which='major', labelsize=ticksize)
+ax.legend(loc = 'upper left', fontsize = 'large', numpoints = 2, markerfirst = True, framealpha = 0.75, handlelength=4, borderpad = 0.2, title = 'Exp, V, mTorr, pos', markerscale = 0.75, title_fontsize = 'large')
 
 fig.tight_layout()
 
@@ -149,6 +151,9 @@ for dic in Exp_dic_list:
     y_mean_lists.append(np.asarray(mean_vels))
     y_peak_lists.append(np.asarray(peak_vels))
 
+for i in range(len(y_mean_lists)):
+    y_mean_lists[i] = y_mean_lists[i]-y_mean_lists[i][0]
+
 fig2, ax2 = plt.subplots(ncols = 1, figsize = (6,6))
 
 print(Exp_name_list[5])
@@ -170,11 +175,12 @@ ax2.plot(dist_positions_lists[4], y_mean_lists[4]*1e-3, color = 'k', marker = '1
 ax2.set_xlabel('Axial dist. from cathode edge (mm)', fontsize = label_fs)
 ax2.set_xlim((65, 0))
 ax2.set_ylabel('Mean velocity (km/s)', fontsize = label_fs)
-ax2.axhline(y=1.742, linestyle = '--', color = 'black', alpha = 1)
+ax2.axhline(y=np.sqrt(2*1.25*const.e/m_Ar)*1e-3, linestyle = '--', color = 'black', alpha = 1)
+ax2.axhline(y=np.sqrt(2*2.5*const.e/m_Ar)*1e-3, linestyle = ':', color = 'black', alpha = 1)
 # ax.set_yticklabels(fontsize = ticksize)
 ax2.set_title('Hollow Cathode ArII 3d $^2\mathregular{G}_{9/2}$ $<\mathbf{v}>$', fontsize = t_fs)
-
-ax2.legend(loc = 'upper left', fontsize = 'medium', numpoints = 2, markerfirst = True, framealpha = 0.75, handlelength=4, borderpad = 0.2, title = 'Exp, V, mTorr, pos', markerscale = 0.75, title_fontsize = 'medium')
+ax2.tick_params(axis='both', which='major', labelsize=ticksize)
+ax2.legend(loc = 'upper left', fontsize = 'large', numpoints = 2, markerfirst = True, framealpha = 0.75, handlelength=4, borderpad = 0.2, title = 'Exp, V, mTorr, pos', markerscale = 0.75, title_fontsize = 'large')
 fig2.tight_layout()
 
 figurepath = os.path.join(os.path.dirname(os.getcwd()), 'figures', 'paper_figures')

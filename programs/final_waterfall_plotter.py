@@ -73,6 +73,9 @@ for key in dic_keys:
     y_axis_list.append(np.asarray(df[column_headers[0]]))
 
 plasma_velocity = x_axis_list[0][find_nearest_index_in_array(y_axis_list[0], max(y_axis_list[0]))]
+# plasma_frequency =
+#
+print('\nThe peak velocity in the plasma bulk is {:.3f} km/s, corresponding to a frequency of {:.3e}'.format(plasma_velocity*1e-3, 0))
 
 color_values = np.linspace(0,0.75,len(dic_keys))
 color_map = matplotlib.cm.get_cmap('CMRmap')
